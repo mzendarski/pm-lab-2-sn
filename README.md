@@ -14,3 +14,6 @@ Grupa studencka: WELE18DX1S1
 
 # Pytania do zadań z instrukcji
 
+ W jaki sposób można określić czas trwania
+opóźnienia zrealizowanego z użyciem pętli?
+Na podstawie ilości akcji jaka jest do wykonania i dlugości ich trwania przy dwóch akcjach włącz i wyłącz trwajacej po sekundzie opóżnienie wyniesie 2 sekundy sekunde aby włączyc i sekunde aby wyłączyć.
