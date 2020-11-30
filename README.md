@@ -17,3 +17,28 @@ Grupa studencka: WELE18DX1S1
  W jaki sposób można określić czas trwania
 opóźnienia zrealizowanego z użyciem pętli?
 Na podstawie ilości akcji jaka jest do wykonania i dlugości ich trwania przy dwóch akcjach włącz i wyłącz trwajacej po sekundzie opóżnienie wyniesie 2 sekundy sekunde aby włączyc i sekunde aby wyłączyć.
+Jeżeli nie widać kodu do zadnia 2.2.1 to przesyłam go tutaj
+
+#include <avr/io.h>
+
+int main() 
+{
+  uint32_t i;
+
+  DDRB |= (1 << 5); // pinmode(13, OUTPUT);
+  while (1)
+  {
+    PORTB |= (1 << 5); //digitalWrite(13. HIGH);
+    i = 0x3FFFF;
+    do
+    {
+      __asm__ __volatile__("nop");
+    } while (i--);
+    PORTB &= !(1 << 5); //digitalWrite(13,LOW);
+    i = 0x3FFFF;
+    do
+    {
+     __asm__ __volatile__("nop");
+    } while (i--);
+  }
+}
