@@ -16,7 +16,10 @@ Grupa studencka: WELE18DX1S1
 
  W jaki sposób można określić czas trwania
 opóźnienia zrealizowanego z użyciem pętli?
-Na podstawie ilości akcji jaka jest do wykonania i dlugości ich trwania przy dwóch akcjach włącz i wyłącz trwajacej po sekundzie opóżnienie wyniesie 2 sekundy sekunde aby włączyc i sekunde aby wyłączyć.
+Na podsatwie uplywającego czasu i zapamiętania go. Różnica miedzy czasem zapamietanym a aktualnym jest naszym opóżnieniem.
+
+
+
 Zpisuje tutaj kody bo nie ufam temu programowi, ponieważ na stronie po commit'cie i push'u widze tylko zmiane poprzez dodanie zdjecia stąd moje obawy
 
 #include <avr/io.h>
@@ -123,4 +126,27 @@ int main () {
     }
 #endif
   }
+}
+3.1
+#include <Arduino.h>
+volatile int state = LOW;
+void myISR();
+
+int main() {
+  init(); // Inicjalizacji biblioteki Arduino
+  pinMode(12, OUTPUT); // Konfiguracja portu PB4 (D12) jako wyjście
+  pinMode(13, OUTPUT); // Konfiguracja portu PB5 (D13) jako wyjście
+  attachInterrupt (0, myISR, CHANGE);
+  sei(); // Globalne włączenie przerwań
+  while (1) {
+   digitalWrite(13, HIGH);
+   delay(500);
+   digitalWrite(13,LOW);
+   delay(500);
+  }
+}
+
+void myISR() {
+  state = !state;
+  digitalWrite(12, state);
 }
