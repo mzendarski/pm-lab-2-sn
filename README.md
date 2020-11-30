@@ -17,7 +17,7 @@ Grupa studencka: WELE18DX1S1
  W jaki sposób można określić czas trwania
 opóźnienia zrealizowanego z użyciem pętli?
 Na podstawie ilości akcji jaka jest do wykonania i dlugości ich trwania przy dwóch akcjach włącz i wyłącz trwajacej po sekundzie opóżnienie wyniesie 2 sekundy sekunde aby włączyc i sekunde aby wyłączyć.
-Jeżeli nie widać kodu do zadnia 2.2.1 to przesyłam go tutaj
+Zpisuje tutaj kody bo nie ufam temu programowi, ponieważ na stronie po commit'cie i push'u widze tylko zmiane poprzez dodanie zdjecia stąd moje obawy
 
 #include <avr/io.h>
 
@@ -84,5 +84,43 @@ int main()
      pLedState++;
      delay();
     }
+  }
+}
+2.2.4
+#include <avr/io.h>
+#define SOLUTION 0
+uint8_t button;
+bool state = true;
+
+void togglePinD13(bool *state) { // Zmiana stanu wyjścia D13
+ PORTB = (*state << 5);
+ *state = !(*state);
+}
+
+void delay() {
+  for (uint32_t j = 0x1FFFF; j > 0; j--)
+   __asm__ __volatile__("nop");
+}
+
+int main () {
+  DDRB &= !(1 << 0); // Skasowanie PB05 (D8) - praca jako wejście
+  DDRB |= (1 << 5); // Ustawienie PB5 (D13) - praca jako wyjście
+  while(1)
+  {
+#if (SOLUTION == 0)
+     button = (PINB & (1 << PINB0)); // Odczytanie stanu PB0
+     if (button == 0) { // Jeżeli przycisk puszczony -przełącz
+      togglePinD13(&state); // Zmiana stanu PB5}
+     delay(); // Pauza
+     }
+    else // W przeciwnym razie
+     delay(); //Pauza
+#elif (SOLUTION == 1)
+   //Rozwiązanie alternatywne
+   while (!(PINB & (1 << PinB0))) {
+     tooglePinD13(&state); // Zmiana stanu PB5
+     delay(); //Pauza
+    }
+#endif
   }
 }
